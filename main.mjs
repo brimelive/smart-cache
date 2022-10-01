@@ -69,6 +69,13 @@ const sub = client.duplicate();
 sub.connect();
 
 // Subcribe to expire events
-sub.subscribe("__keyevent@0__:expired", (key) => {
+sub.subscribe("__keyevent@0__:expired", async (key) => {
     console.log(key + ' has expired')
+
+// Here you can insert code to pull fresh data from it's source and re-cache in Redis based on the key
+
+// EXAMPLE
+// const freshData = await axios.get('https://api.domain.com/multichat?channel=cNhuxD2vE5v3os11OTt9') // Obtain fresh data
+// await client.json.set('multichat:cNhuxD2vE5v3os11OTt9', '$', freshData.data) // Store fresh data
+// await client.expire('multichat:cNhuxD2vE5v3os11OTt9', 5) // Set TTL for next expire
 })
